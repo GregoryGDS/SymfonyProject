@@ -15,6 +15,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+
 class UserController extends AbstractController
 {
 
@@ -25,7 +28,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user-list", name="user-list")
+     * @Route("/list-user", name="list-user")
      */
     public function index()
     {
@@ -33,7 +36,6 @@ class UserController extends AbstractController
         // Send to the View template 'user/index.html.twig' an array of content
         return $this->render('user/userList.html.twig', [
         'userList' => $userList,
-
         ]);
     }
 
@@ -69,10 +71,10 @@ class UserController extends AbstractController
             // flush enregistre/insère (~execute pour php)
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('list-user');
 
         }
-        return $this->render('user/form-createUser.twig', [
+        return $this->render('user/form-createUser.html.twig', [
             'createUserForm' => $form->createView(),
         ]);
     }
