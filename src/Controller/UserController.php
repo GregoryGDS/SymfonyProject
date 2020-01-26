@@ -52,12 +52,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // objet User rempli avec les infos du formulaire
-            // $userData = $form->getData();
-            // $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            // $user->setPassword($password);
-
-            // pas besoin de cette ligne si on injecte ENtityManagerInterface en dépendance
-            // $entityManager = $this->getDoctrine()->getManager();
+            
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $createdDate = date('Y-m-d H:i:s');
             $user->setCreatedDate(new \DateTime($createdDate));
@@ -69,7 +66,7 @@ class UserController extends AbstractController
             // flush enregistre/insère (~execute pour php)
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('user-list');
 
         }
         return $this->render('user/form-createUser.twig', [

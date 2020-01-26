@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface 
 {
     /**
      * @ORM\Id()
@@ -45,6 +46,16 @@ class User
      * @ORM\Column(type="date")
      */
     private $createdDate;
+
+    /** 
+    * @ORM\Column(type="simple_array")
+    */ 
+    private $roles;
+
+    public function __construct() {
+        //$this->videoGames = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
+    } 
 
     public function getId(): ?int
     {
@@ -122,4 +133,30 @@ class User
 
         return $this;
     }
+
+    public function getRoles() 
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): User 
+    {
+        $this->roles = $roles;   
+        return $this;
+    }
+
+    public function getSalt() 
+    {
+        return null; 
+    }
+//pour login
+    public function getUsername() 
+    {
+        return $this->email; 
+    }
+
+    public function eraseCredentials() 
+    {
+    }
+
 }
