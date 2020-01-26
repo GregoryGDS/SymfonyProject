@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Video Game{% endblock %}
+
+{% block body %}
+    {{ form_start(createVideoGameForm) }}
+    <div style='position:center;'>Create Video Game</div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(createVideoGameForm.title) }}
+        </div>
+        <div class="col">
+            {{ form_label(createVideoGameForm.support) }}
+            {{ form_widget(createVideoGameForm.support) }}
+            <span class="text-danger">{{ form_errors(createVideoGameForm.support) }}</span>
+        </div>
+
+        <div class="col">
+            {{ form_label(createVideoGameForm.description) }}
+            {{ form_widget(createVideoGameForm.description) }}
+            <span class="text-danger">{{ form_errors(createVideoGameForm.description) }}</span>
+        </div>
+        <div class="col">
+            {{ form_label(createVideoGameForm.releaseDate) }}
+            {{ form_widget(createVideoGameForm.releaseDate) }}
+            <span class="text-danger">{{ form_errors(createVideoGameForm.releaseDate) }}</span>
+        </div>
+        <div class="col">
+            {{ form_label(createVideoGameForm.gameEditor) }}
+            {{ form_widget(createVideoGameForm.gameEditor) }}
+            <span class="text-danger">{{ form_errors(createVideoGameForm.releaseDate) }}</span>
+        </div>
+
+    </div>
+    {{ form_end(createVideoGameForm) }}
+{% endblock %}
