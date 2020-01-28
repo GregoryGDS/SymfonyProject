@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Editor{% endblock %}
+
+{% block body %}
+    {{ form_start(createEditorForm) }}
+    <div style='position:center;'>
+        Create Editor
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(createEditorForm.companyName) }}
+        </div>
+        <div class="col">
+            {{ form_label(createEditorForm.nationality) }}
+            {{ form_widget(createEditorForm.nationality) }}
+            <span class="text-danger">{{ form_errors(createEditorForm.nationality) }}</span>
+        </div>
+    </div>
+    {{ form_end(createEditorForm) }}
+{% endblock %}
