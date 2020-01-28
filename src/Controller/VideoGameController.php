@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Conﬁguration\IsGranted;
+
 class VideoGameController extends AbstractController
 {
     private $videoGameRepository;

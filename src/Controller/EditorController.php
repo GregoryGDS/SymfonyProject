@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+
+
 class EditorController extends AbstractController
 {
 
@@ -24,7 +26,7 @@ class EditorController extends AbstractController
     }
 
     /**
-     * @Route("/list-editor", name="list-editor")
+     * @Route("/editor", name="editor")
      */
     public function index()
     {
