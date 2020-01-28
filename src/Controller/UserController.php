@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 //use = chemin des fichiers
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
-
 //repository lien avec manager et bdd (ici table user)
 //"sous manager" qui ne transmet que la table user de la bdd que lui envoie manager
 use App\Repository\UserRepository;
 use App\Form\UserType;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+use Doctrine\ORM\EntityManagerInterface;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class UserController extends AbstractController
 {
@@ -26,6 +29,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user-list", name="user-list")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function index()
     {
@@ -52,12 +56,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // objet User rempli avec les infos du formulaire
-            // $userData = $form->getData();
-            // $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            // $user->setPassword($password);
-
-            // pas besoin de cette ligne si on injecte ENtityManagerInterface en dépendance
-            // $entityManager = $this->getDoctrine()->getManager();
+            
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $createdDate = date('Y-m-d H:i:s');
             $user->setCreatedDate(new \DateTime($createdDate));
@@ -69,7 +70,7 @@ class UserController extends AbstractController
             // flush enregistre/insère (~execute pour php)
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('user-list');
 
         }
         return $this->render('user/form-createUser.twig', [
