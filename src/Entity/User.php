@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface 
 {
@@ -18,7 +21,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -145,17 +148,17 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSalt() 
+    public function getSalt()
     {
         return null; 
     }
-//pour login
-    public function getUsername() 
+    //pour login
+    public function getUsername()
     {
         return $this->email; 
     }
 
-    public function eraseCredentials() 
+    public function eraseCredentials()
     {
     }
 

@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 //use = chemin des fichiers
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
-
 //repository lien avec manager et bdd (ici table user)
 //"sous manager" qui ne transmet que la table user de la bdd que lui envoie manager
 use App\Repository\UserRepository;
 use App\Form\UserType;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+use Doctrine\ORM\EntityManagerInterface;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class UserController extends AbstractController
 {
@@ -26,6 +29,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user-list", name="user-list")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function index()
     {
