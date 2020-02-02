@@ -6,8 +6,7 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        TEST BASE
-
+        {% include "home/navbar.html.twig" %}
         {# lire et afficher tous les types de messages flash #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}

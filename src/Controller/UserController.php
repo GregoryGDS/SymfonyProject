@@ -78,11 +78,10 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("success", "L'utilisateur $name a été créé");
-
+          
             $this->EventDispatcher->dispatch(new UserRegisteredEvent($user)); 
 
-            return $this->redirectToRoute('index');//index
-          
+            return $this->redirectToRoute('index');       
         }
         return $this->render('user/form-createUser.html.twig', [
             'createUserForm' => $form->createView(),
