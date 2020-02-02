@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Video Game{% endblock %}
+
+{% block body %}
+    {{ form_start(updatevideoGameForm) }}
+    <div style='position:center;'>Mise à jour du jeu vdéo :</div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(updatevideoGameForm.title) }}
+        </div>
+        <div class="col">
+            {{ form_label(updatevideoGameForm.support) }}
+            {{ form_widget(updatevideoGameForm.support) }}
+            <span class="text-danger">{{ form_errors(updatevideoGameForm.support) }}</span>
+        </div>
+
+        <div class="col">
+            {{ form_label(updatevideoGameForm.description) }}
+            {{ form_widget(updatevideoGameForm.description) }}
+            <span class="text-danger">{{ form_errors(updatevideoGameForm.description) }}</span>
+        </div>
+        <div class="col">
+            {{ form_label(updatevideoGameForm.releaseDate) }}
+            {{ form_widget(updatevideoGameForm.releaseDate) }}
+            <span class="text-danger">{{ form_errors(updatevideoGameForm.releaseDate) }}</span>
+        </div>
+        <div class="col">
+            {{ form_label(updatevideoGameForm.gameEditor) }}
+            {{ form_widget(updatevideoGameForm.gameEditor) }}
+            <span class="text-danger">{{ form_errors(updatevideoGameForm.gameEditor) }}</span>
+        </div>
+    </div>
+    {{ form_end(updatevideoGameForm) }}
+{% endblock %}

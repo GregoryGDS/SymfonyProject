@@ -15,10 +15,8 @@
         {% for videogame in videogameList %}
             <li>
                 {{ videogame.title }}: <br>
-                &nbsp;&nbsp;&nbsp; - Support : {{ videogame.support }} <br>
-                &nbsp;&nbsp;&nbsp; - Description : {{ videogame.description }} <br>
                 &nbsp;&nbsp;&nbsp; - Editeur : {{ videogame.gameEditor.companyName }} <br>
-                &nbsp;&nbsp;&nbsp; - Date de parution : {{ videogame.releaseDate|date('d F Y') }} <br>
+                <a href="{{ path('detail-videogame',{'idVideoGame': videogame.id})}}">Détails</a>
             </li>
         {% endfor %}
     </ul>

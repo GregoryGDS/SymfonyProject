@@ -13,11 +13,8 @@ use App\Form\VideoGameType;
 use App\Repository\VideoGameRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
-
-
-use Sensio\Bundle\FrameworkExtraBundle\Conﬁguration\IsGranted;
 
 class VideoGameController extends AbstractController
 {
@@ -41,6 +38,7 @@ class VideoGameController extends AbstractController
 
     /**
      * @Route("/create-videogame", name="create-videogame")
+     * @IsGranted("ROLE_ADMIN") 
      */
     public function createVideoGame(
         Request $request,
@@ -66,6 +64,66 @@ class VideoGameController extends AbstractController
         return $this->render('video_game/form-createVideoGame.html.twig', [
             'createVideoGameForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/detail-videogame/{idVideoGame}", name="detail-videogame")
+     */
+    public function detailVideoGame(int $idVideoGame){
+
+        $oneVideoGame = $this->videoGameRepository->findOneBy(array('id'=>$idVideoGame));
+        return $this->render('video_game/oneVideoGame.html.twig', [
+            'oneVideoGame' => $oneVideoGame,
+            ]);
+    }
+
+    /**
+     * @Route("/deletevideogame/{idVideoGame}", name="deletevideogame")
+     * @IsGranted("ROLE_ADMIN") 
+     */
+
+    public function deleteVideoGame(
+        int $idVideoGame,
+        EntityManagerInterface $entityManager
+        )
+    {
+        $videoGame = $this->videoGameRepository->findOneBy(array('id'=>$idVideoGame));
+        $title = $videoGame->getTitle();
+
+        $entityManager->remove($videoGame);
+        $entityManager->flush();
+
+        $this->addFlash("success", "Le jeu vidéo $title a été supprimé");
+
+        return $this->redirectToRoute('list-videogame');
+    }
+    
+    /**
+     * @Route("/updateVideoGame/{idVideoGame}", name="updateVideoGame")
+     * @IsGranted("ROLE_ADMIN") 
+     */
+    public function updateVideoGame(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        int $idVideoGame
+        )
+    {
+        $videoGame = $this->videoGameRepository->findOneBy(array('id'=>$idVideoGame));
+        $form = $this->createForm(videoGameType::class, $videoGame);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($videoGame);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le jeu vidéo a été mis à jour.');
+
+            return $this->redirectToRoute('detail-videogame',array('idVideoGame'=>$videoGame->getId()));
+        }
+
+        return $this->render('video_game/updatevideoGame.html.twig', [       
+            'updatevideoGameForm' => $form->createView(),  
+        ]);  
     }
 
 }

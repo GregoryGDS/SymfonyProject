@@ -18,7 +18,7 @@ services:
         volumes:
             - .:/var/www/project:cached
         ports:
-            - 1212:80
+            - 8012:80
     node:
         image: node:12-alpine
         command: sh -c "yarn install && yarn encore dev --watch"

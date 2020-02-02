@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\{DateType, EmailType, PasswordType, RepeatedType, SubmitType, TextType};
 
-class UserType extends AbstractType
+class UserModifyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,11 +25,6 @@ class UserType extends AbstractType
             ->add('birthDate', DateType::class, [
                 'years' => range(date('Y'), date('Y')-100),
                 'label' => 'Sélectionner votre date de naissance : ',
-            ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => 'Mot de passe : '],
-                'second_options' => ['label' => "Répéter le mot de passe : "],
             ])
             ->add('save', SubmitType::class,[
                 'label' => 'Enregistrer',

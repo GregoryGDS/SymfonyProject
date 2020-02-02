@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoGameRepository")
  */
@@ -18,21 +20,29 @@ class VideoGame
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le titre du jeu ne peut pas être vide")
+     * @Assert\Length(min="2", minMessage="Le titre du jeu est trop petit",
+     * max="255", maxMessage="Le titre du jeu est trop long")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom du support ne peut pas être vide")
+     * @Assert\Length(min="2", minMessage="Le nom du support est trop petit",
+     * max="255", maxMessage="Le nom du support est trop long")
      */
     private $support;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Il doit y avoir une description")
      */
     private $description;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\Type(type="DateTime")
      */
     private $releaseDate;
 

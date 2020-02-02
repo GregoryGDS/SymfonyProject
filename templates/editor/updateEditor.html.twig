@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Editor{% endblock %}
+
+{% block body %}
+    {{ form_start(updateEditorForm) }}
+    <div style='position:center;'>
+        Mise à jour de l'éditeur
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(updateEditorForm.companyName) }}
+        </div>
+        <div class="col">
+            {{ form_label(updateEditorForm.nationality) }}
+            {{ form_widget(updateEditorForm.nationality) }}
+            <span class="text-danger">{{ form_errors(updateEditorForm.nationality) }}</span>
+        </div>
+    </div>
+    {{ form_end(updateEditorForm) }}
+{% endblock %}
