@@ -6,10 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+//use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert; 
+//pour vérifier si new password différent de l'ancien password 
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email")
+ * @UniqueEntity("email", message = "Cet email est déjà utilisé !")
  */
 class User implements UserInterface 
 {
@@ -22,36 +26,52 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="L'email ne peut pas être vide")
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'est pas valide."
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Il vous faut un mot de passe")
+     * @Assert\Length(min="2", minMessage="Le prénom est trop petit",
+     * max="255", maxMessage="Le prénom est trop long")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le prénom ne peut pas être vide")
+     * @Assert\Length(min="3", minMessage="Le prénom est trop petit",
+     * max="255", maxMessage="Le prénom est trop long")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom ne peut pas être vide")
+     * @Assert\Length(min="3", minMessage="Le nom est trop petit",
+     * max="255", maxMessage="Le nom est trop long")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\Type(type="DateTime")
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Type(type="DateTime")
      */
     private $createdDate;
 
     /** 
     * @ORM\Column(type="simple_array")
+    * @Assert\NotBlank    
     */ 
     private $roles;
 

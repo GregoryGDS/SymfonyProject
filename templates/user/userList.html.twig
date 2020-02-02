@@ -9,7 +9,6 @@
 </style>
 
 <div class="example-wrapper">
-    {% if is_granted('ROLE_ADMIN') %}    
         <h1>Membre du site</h1>
         <ul>
             {# légèrement différent de php avec foreach userList as user #}
@@ -19,10 +18,9 @@
                     &nbsp;&nbsp;&nbsp; - Email : {{ user.email }} <br>
                     &nbsp;&nbsp;&nbsp; - Date de naissance : {{ user.birthDate|date('d F Y') }} <br>
                     &nbsp;&nbsp;&nbsp; - Création du compte : {{ user.createdDate|date('d F Y') }}<br>
-                    &nbsp;&nbsp;&nbsp; <a href="...">Delete</a> 
+                    <a href="{{ path('deleteUser',{'idUser': user.id})}}">Supprimer</a>
                 </li> 
             {% endfor %}
         </ul>
-    {% endif %}
 </div>
 {% endblock %}
