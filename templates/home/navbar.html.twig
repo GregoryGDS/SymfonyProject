@@ -1,0 +1,81 @@
+<div class="example-wrapper">
+    <table>
+        <tr>
+            <td>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if app.request.attributes.get('_route') != "login-success" %}
+                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('app_login') }}">Se connecter</a>
+            </td>
+            <td>
+                |
+            </td>
+            <td>
+                    <a href="{{ path('create-user') }}">S'inscrire</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if app.request.attributes.get('_route') != "list-videogame" %}
+                    {% if app.request.attributes.get('_route') != "login-success" %}
+                        |
+                    {% endif %}
+            </td>
+            <td>
+                    <a href="{{ path('list-videogame') }}">Liste des Jeux</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if is_granted('ROLE_USER') %}
+                    {% if app.request.attributes.get('_route') != "list-editor" %}
+                        |
+            </td>
+            <td>
+                        <a href="{{ path('list-editor') }}">Liste des éditeurs</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if is_granted('ROLE_USER') %}
+                    {% if app.request.attributes.get('_route') != "profile" %}
+                        |
+            </td>
+            <td>
+                        <a href="{{ path('profile') }}">Votre profil</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.request.attributes.get('_route') != "create-user" %}
+                        |
+            </td>
+            <td>
+                        <a href="{{ path('create-user') }}">Créer Utilisateur</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.request.attributes.get('_route') != "create-videogame" %}
+                        |
+            </td>
+            <td>
+                        <a href="{{ path('create-videogame') }}">Créer Jeux</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.request.attributes.get('_route') != "create-editor" %}
+                        |
+            </td>
+            <td>
+                        <a href="{{ path('create-editor') }}">Créer éditeur</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
