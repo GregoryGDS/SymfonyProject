@@ -15,7 +15,12 @@
         {% for videogame in videogameList %}
             <li>
                 {{ videogame.title }}: <br>
-                &nbsp;&nbsp;&nbsp; - Editeur : {{ videogame.gameEditor.companyName }} <br>
+
+        {% if videogame.gameEditor is not null %}
+            <li>&nbsp;&nbsp;&nbsp; - Editeur : {{ videogame.gameEditor.companyName }}</li>
+        {% else %}
+            <li>&nbsp;&nbsp;&nbsp; - Editeur : Editeur Supprimé</li>
+        {% endif %}
                 <a href="{{ path('detail-videogame',{'idVideoGame': videogame.id})}}">Détails</a>
             </li>
         {% endfor %}
