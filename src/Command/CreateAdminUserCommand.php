@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Command;
+use App\Entity\User;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -27,7 +29,7 @@ class CreateAdminUserCommand extends Command
     {
         $this->entityManager = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
-         // le parent construct est à laisser tel quel
+        // le parent construct est à laisser tel quel
         parent::__construct($name);
     }
 
@@ -49,7 +51,7 @@ class CreateAdminUserCommand extends Command
         // permet de poser une question à l'utilisateur dans le terminal
         $helper = $this->getHelper('question');
         $question = new ConfirmationQuestion(
-            'Confirmer la création de l\'utilisateur ?',
+            'Confirmer la création de l\'utilisateur ? ',
             false, '/^(y|j)/i');
         
         // permet de poser une question à l'utilisateur dans le terminal
@@ -69,12 +71,15 @@ class CreateAdminUserCommand extends Command
 
         $user = new User();
         $hashedPassword = $this->passwordEncoder->encodePassword($user, $password);
+        $createdDate = date('Y-m-d H:i:s');
+        
         $user->setEmail($email);
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_ADMIN']);
         $user->setFirstName($firstName ?? '');
         $user->setLastName($lastName ?? '');
 
+        $user->setCreatedDate(new \DateTime($createdDate));
         
         try {
             $this->entityManager->persist($user);

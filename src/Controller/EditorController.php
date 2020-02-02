@@ -77,7 +77,7 @@ class EditorController extends AbstractController
         $oneEditor = $this->EditorRepository->findOneBy(array('id'=>$idEditor));
         return $this->render('editor/oneEditor.html.twig', [
             'oneEditor' => $oneEditor,
-            ]);
+        ]);
     }
 
     /**
@@ -120,6 +120,10 @@ class EditorController extends AbstractController
     {
         $editor = $this->EditorRepository->findOneBy(array('id'=>$idEditor));
         $company = $editor->getCompanyName();
+
+        foreach($editor->getVideoGames() as $jeu) {
+            $editor->removeVideoGame($jeu);
+        }
 
         $entityManager->remove($editor);
         $entityManager->flush();

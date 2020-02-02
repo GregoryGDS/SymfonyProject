@@ -13,7 +13,13 @@
     <ul>
         <li>Support : {{ oneVideoGame.support }}</li>
         <li>Description : {{ oneVideoGame.description }}</li>
+
+    {% if oneVideoGame.gameEditor is not null %}
         <li>Editeur : {{ oneVideoGame.gameEditor.companyName }}</li>
+    {% else %}
+        <li>Editeur : Editeur Supprimé</li>
+    {% endif %}
+
         <li>Date de parution : {{ oneVideoGame.releaseDate|date('d F Y') }}</li> 
     {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('updateVideoGame',{'idVideoGame': oneVideoGame.id})}}">Modifier le jeu</a></li>
