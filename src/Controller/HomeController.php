@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/index", name="index")
      */
     public function index()
     {
