@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detail Editor{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Détail de l'éditeur : {{ oneEditor.companyName }}</h1>
+    <ul>
+        <li><a href="{{ path('updateEditor',{'idEditor': oneEditor.id})}}">Modifier l'éditeur</a></li>
+        <li><a href="{{ path('deleteEditor',{'idEditor': oneEditor.id})}}">Supprimer l'éditeur</a></li>
+
+        <li>
+            - Nationalité : {{ oneEditor.nationality }} <br>
+            - Liste des jeux publiés :<br>
+            <ul>
+            {% for oneVideoGame in oneEditor.getVideoGames %}    
+                <li>{{oneVideoGame.getTitle}} </li>
+            {% endfor %}
+            </ul>
+        </li>
+     </ul>
+</div>
+{% endblock %}
+
+
+
+   

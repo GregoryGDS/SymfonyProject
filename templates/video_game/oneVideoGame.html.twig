@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detail Vdeo Game{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Détail du jeu : {{ oneVideoGame.title }}</h1>
+    <ul>
+        <li>Support : {{ oneVideoGame.support }}</li>
+        <li>Description : {{ oneVideoGame.description }}</li>
+        <li>Editeur : {{ oneVideoGame.gameEditor.companyName }}</li>
+        <li>Date de parution : {{ oneVideoGame.releaseDate|date('d F Y') }}</li> 
+    {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="{{ path('updateVideoGame',{'idVideoGame': oneVideoGame.id})}}">Modifier le jeu</a></li>
+        <li><a href="{{ path('deletevideogame',{'idVideoGame': oneVideoGame.id})}}">Supprimer</a></li>
+
+    {% endif %}
+     </ul>
+</div>
+{% endblock %}
+
+
+
+   

@@ -14,8 +14,9 @@
         {# légèrement différent de php avec foreach editorList as editor #}
         {% for editor in editorList %}
             <li>
-               Nom d'entreprise : {{ editor.companyName }} <br>
-               Nationalité : {{ editor.nationality }} <br>
+                Nom d'entreprise : {{ editor.companyName }} <br>
+                Nationalité : {{ editor.nationality }} <br>
+                <a href="{{ path('detail-editor',{'idEditor': editor.id})}}">Détails</a>
             </li>
         {% endfor %}
     </ul>

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifer votre profil{% endblock %}
+
+{% block body %}
+    {{ form_start(updateUserForm) }}
+    <div style='position:center;'>Modifer votre profil</div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(updateUserForm.firstName) }}
+        </div>
+        <div class="col">
+            {{ form_label(updateUserForm.lastName) }}
+            {{ form_widget(updateUserForm.lastName) }}
+            <span class="text-danger">{{ form_errors(updateUserForm.lastName) }}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(updateUserForm.birthDate) }}
+        </div>
+    </div>
+
+    {{ form_end(updateUserForm) }}
+{% endblock %}
