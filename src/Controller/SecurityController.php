@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 class SecurityController extends AbstractController
 {
     /**
@@ -16,7 +18,7 @@ class SecurityController extends AbstractController
     {
         // si l'utilisateur accède à "\login" en étant déjà connect
         if ($this->getUser()) {
-            return $this->redirectToRoute('/');
+            return $this->redirectToRoute('/login-success');
         }
 
         // get the login error if there is one
@@ -40,6 +42,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login-success", name="login-success")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function connectSuccess()
     {

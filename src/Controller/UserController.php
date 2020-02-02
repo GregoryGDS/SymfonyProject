@@ -7,27 +7,31 @@ use App\Entity\User;
 //"sous manager" qui ne transmet que la table user de la bdd que lui envoie manager
 use App\Repository\UserRepository;
 use App\Form\UserType;
+use App\Event\UserRegisteredEvent;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Doctrine\ORM\EntityManagerInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
-
 class UserController extends AbstractController
 {
 
     private $userRepository;
+    private $EventDispatcher;
 
-    public function __construct(UserRepository $userRepository){
+    public function __construct(
+        UserRepository $userRepository, 
+        EventDispatcherInterface $EventDispatcher)
+    {
         $this->userRepository = $userRepository;
+        $this->EventDispatcher = $EventDispatcher;
     }
 
     /**
@@ -75,7 +79,9 @@ class UserController extends AbstractController
 
             $this->addFlash("success", "L'utilisateur $name a été créé");
 
-            return $this->redirectToRoute('list-user');
+            $this->EventDispatcher->dispatch(new UserRegisteredEvent($user)); 
+
+            return $this->redirectToRoute('index');//index
           
         }
         return $this->render('user/form-createUser.html.twig', [
