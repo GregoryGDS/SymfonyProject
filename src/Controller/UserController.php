@@ -78,9 +78,11 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("success", "L'utilisateur $name a été créé");
-          
-            $this->EventDispatcher->dispatch(new UserRegisteredEvent($user)); 
 
+            $UserRegisteredEvent = new UserRegisteredEvent($user);
+            $this->EventDispatcher->dispatch($UserRegisteredEvent); 
+
+            //dd($UserRegisteredEvent);
             return $this->redirectToRoute('index');       
         }
         return $this->render('user/form-createUser.html.twig', [
@@ -90,29 +92,43 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/profile/{idUser}", name="profile")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function profile(
+        int $idUser = null,
         Request $request)
     {
+        if($idUser==null){
+            $user = $this->getUser();
+        }else{
+            $user = $this->userRepository->findOneBy(array('id'=>$idUser));
+        }
+
         return $this->render('user/userProfile.html.twig', [       
-            'user' => $this->getUser(),  
+            'user' =>  $user,  
         ]);          
 
     }
 
 
     /**
-     * @Route("/updateUser", name="updateUser")
+     * @Route("/updateUser/{idUser}", name="updateUser")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function updateUser(
+        int $idUser = null,
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $passwordEncoder)
     {
-        $user = $this->getUser();
+
+        if($idUser==null){ //utilisateur actuel
+            $user = $this->getUser();
+        }else{ //admin qui veut modifier un autre utilisateur
+            $user = $this->userRepository->findOneBy(array('id'=>$idUser));
+        }
+
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -123,9 +139,13 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success', 'Votre profil a été mis à jour.');
+            $this->addFlash('success','Le profil a été mis à jour');
 
-            return $this->redirectToRoute('profile');
+            if($idUser==null){
+                return $this->redirectToRoute('profile'); //redirection le profil de l'utilisateur actuel
+            }else{
+                return $this->redirectToRoute('profile',['idUser'=>$user->getId()]); //redirection sur le profil modifié par l'admin
+            }
         }
 
         return $this->render('user/updateUser.html.twig', [       

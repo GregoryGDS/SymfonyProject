@@ -27,6 +27,16 @@
                 {% endif %}
             </td>
             <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.request.attributes.get('_route') != "list-user" %}
+                        |
+            </td>
+            <td>
+                        <a href="{{ path('list-user') }}">Liste des utilisateurs</a>
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
                 {% if is_granted('ROLE_USER') %}
                     {% if app.request.attributes.get('_route') != "list-editor" %}
                         |

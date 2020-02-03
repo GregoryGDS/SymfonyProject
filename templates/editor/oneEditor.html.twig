@@ -11,9 +11,11 @@
 <div class="example-wrapper">
     <h1>Détail de l'éditeur : {{ oneEditor.companyName }}</h1>
     <ul>
+    {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('updateEditor',{'idEditor': oneEditor.id})}}">Modifier l'éditeur</a></li>
         <li><a href="{{ path('deleteEditor',{'idEditor': oneEditor.id})}}">Supprimer l'éditeur</a></li>
 
+    {% endif %}
         <li>
             - Nationalité : {{ oneEditor.nationality }} <br>
             - Liste des jeux publiés :<br>
