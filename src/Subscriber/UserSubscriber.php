@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Event\UserRegisteredEvent;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,12 +25,15 @@ final class EventSubscriber implements EventSubscriberInterface
     public function onUserRegisteredEvent(UserRegisteredEvent $event): void
     {
         $user = $event->getUser();
-        $this->logger->info(sprintf(
+        if($user){
+            $this->logger->info(sprintf(
                 'Utilisateur créé avec : email %s, firstName %s and lastName %s',
                 $user->getEmail(),
                 $user->getFirstName(),
                 $user->getLastName()
         ));
+        }
+
     }
 
 }

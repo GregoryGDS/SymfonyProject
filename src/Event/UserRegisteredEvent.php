@@ -8,6 +8,7 @@ use App\Entity\User;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
+
 final class UserRegisteredEvent extends Event
 {
     private $eventUser;

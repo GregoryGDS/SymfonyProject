@@ -9,15 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-        <h1>Votre Profil</h1>
+        <h1>Profil</h1>
         <ul>
-            <li>Prénom :{{ user.firstName}}</li>
+            <li>Prénom : {{ user.firstName}}</li>
             <li>Nom : {{ user.lastName|upper }} </li>
             <li>Email: {{ user.email }}</li>
             <li>Date de naissance: {{ user.birthDate|date('d F Y') }}</li>
             <li>Date de création du compte : {{ user.createdDate|date('d F Y') }}</li>
 
-            <a href="{{ path('updateUser') }}">Modifier son profil</a>
+            <a href="{{ path('updateUser',{'idUser': user.id}) }}">Modifier le profil</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('deleteUser',{'idUser': user.id})}}">Supprimer</a>
+        {% endif %}
         </ul>
 
 </div>
