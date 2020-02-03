@@ -18,7 +18,8 @@
                     &nbsp;&nbsp;&nbsp; - Email : {{ user.email }} <br>
                     &nbsp;&nbsp;&nbsp; - Date de naissance : {{ user.birthDate|date('d F Y') }} <br>
                     &nbsp;&nbsp;&nbsp; - Création du compte : {{ user.createdDate|date('d F Y') }}<br>
-                    <a href="{{ path('deleteUser',{'idUser': user.id})}}">Supprimer</a>
+                    &nbsp;&nbsp;&nbsp; <a href="{{ path('profile',{'idUser': user.id})}}">Détails utilisateur</a>
+
                 </li> 
             {% endfor %}
         </ul>
